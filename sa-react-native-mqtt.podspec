@@ -8,9 +8,9 @@ Pod::Spec.new do |s|
   s.version = package[:version]
   s.license = { type: "MIT" }
   s.homepage = "https://github.com/sankalppatra2002-beep/sa-react-native-mqtt"
-  s.authors = package[:author][:name]
+  s.authors = package[:author] && package[:author][:name] ? package[:author][:name] : "Sankalp Patra"
   s.summary = package[:description]
-  s.source = { git: package[:repository][:url] }
+  s.source = { git: package[:repository] && package[:repository][:url] ? package[:repository][:url] : "https://github.com/sankalppatra2002-beep/sa-react-native-mqtt.git" }
   s.source_files = "ios/*.{h,m}"
   s.platform = :ios, "8.0"
 

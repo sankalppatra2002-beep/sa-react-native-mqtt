@@ -15,6 +15,10 @@
     "reactnative",
     "iot"
   ],
+  "author": {
+    "name": "Sankalp Patra",
+    "email": "sankalppatra2002@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sankalppatra2002-beep/react-native-mqtt/issues"
