@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "MQTT client for react-native",
   "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +15,9 @@
   "keywords": [
     "mqtt",
     "reactnative",
-    "iot"
+    "iot",
+    "swift",
+    "kotlin"
   ],
   "author": {
     "name": "Sankalp Patra",
@@ -24,5 +28,13 @@
     "url": "https://github.com/sankalppatra2002-beep/react-native-mqtt/issues"
   },
   "homepage": "https://github.com/sankalppatra2002-beep/react-native-mqtt#readme",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-native": "^0.73.0"
+  },
   "packageManager": "yarn@1.22.22"
 }

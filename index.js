@@ -1,133 +1,114 @@
-import {
-  NativeEventEmitter,
-  NativeModules
-} from 'react-native';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
-var Mqtt = NativeModules.Mqtt;
+const { Mqtt: NativeMqtt } = NativeModules;
+const emitter = new NativeEventEmitter(NativeMqtt);
 
-var MqttClient = function(options, clientRef){
-  this.options = options;
-  this.clientRef = clientRef;
-  this.eventHandler = {};
+class MqttClient {
+  constructor(options, clientRef) {
+    this.options = options;
+    this.clientRef = clientRef;
+    this._handlers = {};
+  }
 
-  this.dispatchEvent = function(data) {
+  on(event, callback) {
+    this._handlers[event] = callback;
+  }
 
-    if(data && data.clientRef == this.clientRef && data.event) {
-
-      if(this.eventHandler[data.event]) {
-        this.eventHandler[data.event](data.message);
-      }
+  _dispatch(data) {
+    if (data && data.clientRef === this.clientRef && data.event) {
+      const handler = this._handlers[data.event];
+      if (handler) handler(data.message);
     }
+  }
+
+  connect() {
+    NativeMqtt.connect(this.clientRef);
+  }
+
+  disconnect() {
+    NativeMqtt.disconnect(this.clientRef);
+  }
+
+  subscribe(topic, qos) {
+    NativeMqtt.subscribe(this.clientRef, topic, qos);
+  }
+
+  unsubscribe(topic) {
+    NativeMqtt.unsubscribe(this.clientRef, topic);
+  }
+
+  publish(topic, payload, qos, retain) {
+    NativeMqtt.publish(this.clientRef, topic, payload, qos, retain);
+  }
+
+  reconnect() {
+    NativeMqtt.reconnect(this.clientRef);
+  }
+
+  isConnected() {
+    return NativeMqtt.isConnected(this.clientRef);
+  }
+
+  getTopics() {
+    return NativeMqtt.getTopics(this.clientRef);
+  }
+
+  isSubbed(topic) {
+    return NativeMqtt.isSubbed(this.clientRef, topic);
   }
 }
 
-MqttClient.prototype.on = function (event, callback) {
-  console.log('setup event', event);
-  this.eventHandler[event] = callback;
-}
+const mqtt = {
+  _clients: [],
+  _eventSub: null,
 
-MqttClient.prototype.connect = function () {
-  Mqtt.connect(this.clientRef);
-}
-
-MqttClient.prototype.disconnect = function () {
-  Mqtt.disconnect(this.clientRef);
-}
-
-MqttClient.prototype.subscribe = function (topic, qos) {
-  Mqtt.subscribe(this.clientRef, topic, qos);
-}
-
-MqttClient.prototype.unsubscribe = function (topic) {
-  Mqtt.unsubscribe(this.clientRef, topic);
-}
-
-MqttClient.prototype.publish = function(topic, payload, qos, retain) {
-  Mqtt.publish(this.clientRef, topic, payload, qos, retain);
-}
-
-MqttClient.prototype.reconnect = function() {
-  Mqtt.reconnect(this.clientRef);
-};
-
-MqttClient.prototype.isConnected = function() {
-  return Mqtt.isConnected(this.clientRef);
-};
-
-MqttClient.prototype.getTopics = function() {
-  return Mqtt.getTopics(this.clientRef);
-};
-
-MqttClient.prototype.isSubbed = function(topic) {
-  return Mqtt.isSubbed(this.clientRef, topic);
-};
-
-const emitter = new NativeEventEmitter(Mqtt)
-
-module.exports = {
-  clients: [],
-  eventHandler: null,
-  dispatchEvents: function(data) {
-    this.clients.forEach(function(client) {
-      client.dispatchEvent(data);
-    });
-  },
-  createClient: async function(options) {
-    if(options.uri) {
-			var pattern = /^((mqtt[s]?|ws[s]?)?:(\/\/)([0-9a-zA-Z_\.\-]*):?(\d+))$/;
-      var matches = options.uri.match(pattern);
+  async createClient(options) {
+    if (options.uri) {
+      const pattern = /^((mqtt[s]?|ws[s]?)?:(\/\/)([0-9a-zA-Z_.\-]*):?(\d+))$/;
+      const matches = options.uri.match(pattern);
       if (!matches) {
-        throw new Error(`Uri passed to createClient ${options.uri} doesn't match a known protocol (mqtt:// or ws://).`);
+        throw new Error(
+          `Uri "${options.uri}" doesn't match a known protocol (mqtt://, mqtts://, ws://, wss://).`
+        );
       }
-      var protocol = matches[2];
-      var host = matches[4];
-      var port =  matches[5];
-
-      options.port = parseInt(port);
-      options.host = host;
+      const protocol = matches[2];
+      options.host = matches[4];
+      options.port = parseInt(matches[5], 10);
       options.protocol = 'tcp';
 
-
-      if(protocol == 'wss' || protocol == 'mqtts') {
-        options.tls = true;
-      }
-      if(protocol == 'ws' || protocol == 'wss') {
-        options.protocol = 'ws';
-      }
-
+      if (protocol === 'wss' || protocol === 'mqtts') options.tls = true;
+      if (protocol === 'ws' || protocol === 'wss') options.protocol = 'ws';
     }
 
-    let clientRef = await Mqtt.createClient(options);
+    const clientRef = await NativeMqtt.createClient(options);
+    const client = new MqttClient(options, clientRef);
 
-    var client = new MqttClient(options, clientRef);
-
-    /* Listen mqtt event */
-    if(this.eventHandler === null) {
-      console.log('add mqtt_events listener')
-      this.eventHandler = emitter.addListener(
-        "mqtt_events",
-        (data) => this.dispatchEvents(data));
+    if (this._eventSub === null) {
+      this._eventSub = emitter.addListener('mqtt_events', (data) => {
+        this._clients.forEach((c) => c._dispatch(data));
+      });
     }
-    this.clients.push(client);
 
+    this._clients.push(client);
     return client;
   },
-  removeClient: function(client) {
-    var clientIdx = this.clients.indexOf(client);
 
-    if(clientIdx > -1)
-      this.clients.splice(clientIdx, 1);
+  removeClient(client) {
+    const idx = this._clients.indexOf(client);
+    if (idx > -1) this._clients.splice(idx, 1);
 
-    if(this.clients.length > 0) {
-      this.eventHandler.remove();
-      this.eventHandler = null;
+    if (this._clients.length === 0 && this._eventSub !== null) {
+      this._eventSub.remove();
+      this._eventSub = null;
     }
 
-    Mqtt.removeClient(client.clientRef);
+    NativeMqtt.removeClient(client.clientRef);
   },
 
-  disconnectAll: function () {
-    Mqtt.disconnectAll();
+  disconnectAll() {
+    NativeMqtt.disconnectAll();
   },
-
 };
+
+export default mqtt;
+export { MqttClient };

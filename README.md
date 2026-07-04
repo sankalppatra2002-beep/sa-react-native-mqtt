@@ -27,9 +27,6 @@
 - [Quick Start](#quick-start)
 - [Usage](#usage)
 - [API](#api)
-- [Contributing](#contributing)
-- [Todo](#todo)
-- [License](#license)
 
 ---
 
@@ -177,14 +174,3 @@ Creates a new client instance with the given options (returns a Promise).
 - `topic` (string): Topic name (default: `"/data"`)
 
 ---
-
-## Contributing
-
-Contributions, issues and feature requests are welcome!  
-Feel free to check [issues page](https://github.com/your-repo/sa-react-native-mqtt/issues) or submit a [pull request](https://github.com/your-repo/sa-react-native-mqtt/pulls).
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
-
-## License
-
-This project inherits its license from the underlying MQTT libraries. See the [LICENSE](./LICENSE) file for details.
