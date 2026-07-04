@@ -1,4 +1,4 @@
-package com.tuanpm.RCTMqtt
+package com.sankalp.RCTMqtt
 
 import android.util.Base64
 import com.facebook.react.bridge.Arguments

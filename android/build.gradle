@@ -17,7 +17,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace 'com.tuanpm.RCTMqtt'
+    namespace 'com.sankalp.RCTMqtt'
     compileSdk safeExtGet('compileSdkVersion', 34)
 
     defaultConfig {
