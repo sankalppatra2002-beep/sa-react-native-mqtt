@@ -1,6 +1,6 @@
 {
   "name": "sa-react-native-mqtt",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "MQTT client for React Native with hooks, JSON support, and batch operations",
   "main": "index.js",
   "types": "index.d.ts",

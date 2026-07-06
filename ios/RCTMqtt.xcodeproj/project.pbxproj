@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D20012C61E4FA06500CE2854 /* Mqtt.m in Sources */ = {isa = PBXBuildFile; fileRef = D20012C51E4FA06500CE2854 /* Mqtt.m */; };
+		D20012C71E4FA06500CE2854 /* Mqtt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20012C71E4FA06500CE2854 /* Mqtt.swift */; };
 		FF7A9D4E1C64788B006743BA /* RCTMqtt.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7A9D4C1C64788B006743BA /* RCTMqtt.m */; };
+		FF7A9D4F1C64788B006743BA /* RCTMqtt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7A9D4F1C64788B006743BA /* RCTMqtt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,11 +25,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D20012C41E4FA06500CE2854 /* Mqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
-		D20012C51E4FA06500CE2854 /* Mqtt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mqtt.m; sourceTree = "<group>"; };
+		D20012C71E4FA06500CE2854 /* Mqtt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mqtt.swift; sourceTree = "<group>"; };
 		FF7A9D401C64785B006743BA /* libRCTMqtt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTMqtt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF7A9D4C1C64788B006743BA /* RCTMqtt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTMqtt.m; sourceTree = "<group>"; };
 		FF7A9D4D1C64788B006743BA /* RCTMqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTMqtt.h; sourceTree = "<group>"; };
+		FF7A9D4F1C64788B006743BA /* RCTMqtt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTMqtt.swift; sourceTree = "<group>"; };
+		FF7A9D501C64788B006743BA /* RCTMqtt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTMqtt-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,10 +47,11 @@
 		FF7A9D371C64785B006743BA = {
 			isa = PBXGroup;
 			children = (
-				D20012C41E4FA06500CE2854 /* Mqtt.h */,
-				D20012C51E4FA06500CE2854 /* Mqtt.m */,
+				D20012C71E4FA06500CE2854 /* Mqtt.swift */,
 				FF7A9D4D1C64788B006743BA /* RCTMqtt.h */,
 				FF7A9D4C1C64788B006743BA /* RCTMqtt.m */,
+				FF7A9D4F1C64788B006743BA /* RCTMqtt.swift */,
+				FF7A9D501C64788B006743BA /* RCTMqtt-Bridging-Header.h */,
 				FF7A9D411C64785B006743BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,7 +121,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF7A9D4E1C64788B006743BA /* RCTMqtt.m in Sources */,
-				D20012C61E4FA06500CE2854 /* Mqtt.m in Sources */,
+				FF7A9D4F1C64788B006743BA /* RCTMqtt.swift in Sources */,
+				D20012C71E4FA06500CE2854 /* Mqtt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +226,8 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/RCTMqtt-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -242,6 +248,8 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/RCTMqtt-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

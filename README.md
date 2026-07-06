@@ -501,21 +501,84 @@ dependencies {
 
 ---
 
-## Changelog
+## 📦 Changelog
 
-### v1.2.0 — Developer Experience
+### v1.2.1 — iOS Fix
 
-- **React Hooks** — `useMqtt`, `useSubscription`, `usePublish` via `sa-react-native-mqtt/hooks`
-- **Batch subscribe/unsubscribe** — pass an array of topics or `{ topic, qos }` objects
-- **JSON mode** — `json: true` option auto-serializes publish payloads and auto-parses incoming messages; overridable per call
-- **Debug logging** — `debug: true` logs all internal operations with a `[sa-react-native-mqtt]` prefix
-- **Connection state helper** — synchronous `client.getState()` and exported `ConnectionState` constants
-- **Timeouts** — `timeoutMs` option on `subscribe`, `unsubscribe`, and `publish`
-- **`client.off(event)`** — remove a previously registered event listener
-- **Better error messages** — descriptive errors for missing `clientId`, malformed URI, invalid topics, and JSON serialization failures
-- **TypeScript improvements** — `ConnectionState`, `ConnectionStateValue`, `TopicSubscription`, `PublishOptions`, `SubscribeOptions`, full hook return types, JSDoc on all public members
-- No breaking changes from v1.1.x
+* Fixed MQTT connectivity issue on iOS
+* No breaking changes from v1.2.0
 
-### v1.1.1
 
-- Initial public release with SSL/TLS, reconnect, and multi-client support
+### v1.2.0 — Developer Experience Upgrade 🚀
+
+**🪝 React Hooks (React Native support)**
+
+* Added `useMqtt`, `useSubscription`, `usePublish`
+* Available via `sa-react-native-mqtt/hooks`
+
+**📡 Subscription Improvements**
+
+* Batch subscribe/unsubscribe support
+* Accepts arrays of topics or `{ topic, qos }` objects
+
+**🧾 JSON Mode**
+
+* `json: true` automatically:
+
+  * Serializes outgoing payloads
+  * Parses incoming messages
+* Can be overridden per call
+
+**🐛 Debugging**
+
+* `debug: true` enables internal logging
+* Logs prefixed with `[sa-react-native-mqtt]`
+
+**🔌 Connection Utilities**
+
+* `client.getState()` for synchronous connection state
+* Added `ConnectionState` constants
+
+**⏱️ Timeouts**
+
+* `timeoutMs` supported for:
+
+  * `subscribe`
+  * `unsubscribe`
+  * `publish`
+
+**🧹 Event Handling**
+
+* New `client.off(event)` to remove listeners
+
+**⚠️ Better Error Handling**
+
+* Clear errors for:
+
+  * Missing `clientId`
+  * Invalid MQTT URI
+  * Malformed topics
+  * JSON serialization failures
+
+**🧠 TypeScript Improvements**
+
+* Strong typing for:
+
+  * `ConnectionState`
+  * `TopicSubscription`
+  * `PublishOptions`
+  * `SubscribeOptions`
+* Full hook typings added
+* JSDoc documentation for public APIs
+
+**🔄 Compatibility**
+
+* No breaking changes from v1.1.x
+
+### v1.1.1 — Initial Release
+
+* First public release
+* SSL/TLS support
+* Auto-reconnect
+* Multi-client support
+

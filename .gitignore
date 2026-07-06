@@ -4,7 +4,10 @@
 
 # vim
 #
-*.sw*
+*.swp
+*.swo
+*.swn
+!*.swift
 
 # Xcode
 #
